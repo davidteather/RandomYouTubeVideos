@@ -1,25 +1,30 @@
 import random, string, time, json, requests, webbrowser, os, logging
 
+# If the found URL should actually open
+openbrowser = True
+
 # How long the generated video tag should be
 vidtaglength = 11
 
 # Delay after each if video exist to prevent timeouts
 # I'm not responsible if you change this to DDOS levels
-videocheckexistdelay = 10
+videocheckexistdelay = 0
 
 # If Console Logging should be enabled
-consolelogging = False
+consolelogging = True
 
 # Time Sleep after every video is found consolelogging must be on
 sleepatend = 60
 
 # Log file
 logfile = "youtubefound.log"
-filelogging = False
+filelogging = True
 
-def randomStringDigits(stringLength=6):
+def randomStringDigits(stringLength=11):
     """Generate a random string of letters and digits """
-    lettersAndDigits = string.ascii_letters + string.digits
+    basechoice = string.ascii_letters + string.digits + "-" + "_"
+    # I was too lazy to make a real thing
+    lettersAndDigits = basechoice + basechoice + basechoice + basechoice + basechoice + basechoice + basechoice
     return ''.join(random.choice(lettersAndDigits) for i in range(stringLength))
 
 
@@ -73,7 +78,8 @@ while (tabs1 > 0):
     url = 'https://www.youtube.com/watch?v=' + str(vidval)
 
     # Opens the set url
-    webbrowser.open_new(url)
+    if openbrowser is True:
+        webbrowser.open_new(url)
     tabendtime = time.time()
     timefortab = (tabtime - tabendtime)
     if consolelogging == True:
